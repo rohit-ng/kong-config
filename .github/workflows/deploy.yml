@@ -35,6 +35,7 @@ jobs:
         with:
           role-to-assume: "arn:aws:iam::471112575944:role/github-actions"
           aws-region: ap-south-1
+    deploy_kong:      
       - name: Deploy Kong
         run: |
           aws ecs update-service --cluster kong-cluster --service kong-service --force-new-deployment
