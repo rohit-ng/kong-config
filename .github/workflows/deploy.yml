@@ -1,0 +1,28 @@
+name: Deploy Kong
+
+on:
+  push:
+    paths:
+      - 'kong.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: 'ap-south-1'  # Replace with your AWS region
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ASIAW3MD7NPEIY2OOEUA
+        aws-secret-access-key: TqrBBlwkgXYOBiRQqtGOhYTTqcb1bYlENLTSnMr3
+        aws-region: ap-south-1
+
+    - name: Deploy Kong
+      run: |
+        aws ecs update-service --cluster kong-cluster --service kong-service --force-new-deployment
