@@ -4,9 +4,9 @@ services:
   - name: my-service
     url: http://httpbin.org
     routes:
-      - name: my-route-d
+      - name: my-route-d1
         paths:
           - /my-path
-      - name: my-route-d
+      - name: my-route-d2
         paths:
           - /test
