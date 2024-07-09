@@ -7,6 +7,10 @@ on:
     paths:
       - kong.yml
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   install_tools:
     name: Install Tools
@@ -26,7 +30,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Configure AWS credentials from GHA OIDC
         id: aws-credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: "arn:aws:iam::471112575944:role/github-actions"
           aws-region: ap-south-1
