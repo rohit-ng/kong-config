@@ -30,6 +30,8 @@ jobs:
         with:
           role-to-assume: "arn:aws:iam::471112575944:role/github-actions"
           aws-region: ap-south-1
+      - name: Verify AWS Credentials
+        run: aws sts get-caller-identity
 
   deploy_kong:
     name: Deploy Kong
