@@ -7,3 +7,9 @@ services:
       - name: my-route-d
         paths:
           - /my-path
+  - name: my-service
+    url: http://httpbin.org
+    routes:
+      - name: my-route-d
+        paths:
+          - /test
