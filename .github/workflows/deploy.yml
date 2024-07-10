@@ -23,8 +23,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y unzip awscli
 
-  deploy_kong:
-    name: Deploy Kong
+  build_and_push_docker:
+    name: Build and Push Docker Image
     runs-on: ubuntu-latest
     needs: install_tools
     steps:
@@ -36,9 +36,12 @@ jobs:
         with:
           role-to-assume: "arn:aws:iam::471112575944:role/kongExecutionRole"
           aws-region: ap-south-1
-      - name: Verify AWS Credentials
-        run: aws sts get-caller-identity
-      - name: Deploy Kong
-        run: |
-          aws ecs describe-clusters --clusters kong-cluster
-          aws ecs update-service --cluster kong-cluster --service kong-service --force-new-deployment
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build Docker image
+        run: docker build -t kong-custom .
+      - name: Tag Docker image
+        run: docker tag kong-custom:latest 471112575944.dkr.ecr.ap-south-1.amazonaws.com/kong-custom:latest
+      - name: Push Docker image to ECR
+        run: docker push 471112575944.dkr.ecr.ap-south-1.amazonaws.com/kong-custom:latest
+
